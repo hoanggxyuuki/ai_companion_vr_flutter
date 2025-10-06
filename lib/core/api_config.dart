@@ -1,5 +1,5 @@
 class ApiConfig {
-  static const String baseUrl = 'http://192.168.1.228:8000';
+  static const String baseUrl = 'http://api_server';
   static const String apiKey = 'hoanggxyuuki';
   
   static String get visionWsUrl => baseUrl

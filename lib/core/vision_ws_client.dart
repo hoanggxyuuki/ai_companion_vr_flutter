@@ -25,7 +25,6 @@ class VisionWsClient {
 
   Future<void> connect() async {
     try {
-      // WebSocket URLs cần protocol ws:// thay vì http://
       final wsUrl = ApiConfig.baseUrl
           .replaceFirst('http://', 'ws://')
           .replaceFirst('https://', 'wss://');
@@ -34,7 +33,6 @@ class VisionWsClient {
       
       debugPrint('VR Vision: Connecting to WebSocket: $uri');
       
-      // Thêm API key vào query parameter
       final uriWithAuth = uri.replace(queryParameters: {
         'api_key': ApiConfig.apiKey,
       });
@@ -75,11 +73,9 @@ class VisionWsClient {
         },
       );
 
-      // Chờ một chút để connection establish
       await Future.delayed(const Duration(milliseconds: 1000));
       _isConnected = true;
       
-      // Gửi ping định kỳ để duy trì connection
       _startPing();
       
       debugPrint('VR Vision WebSocket connected successfully');
@@ -112,13 +108,11 @@ class VisionWsClient {
     }
     
     try {
-      // Gửi binary data (JPEG bytes)
       _channel!.sink.add(bytes);
       debugPrint('VR Vision WebSocket: Sent ${bytes.length} bytes');
     } catch (e) {
       debugPrint('VR Vision WebSocket send error: $e');
       onError?.call('Send error: $e');
-      // Try to reconnect on send error
       _isConnected = false;
     }
   }

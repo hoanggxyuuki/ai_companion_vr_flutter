@@ -11,7 +11,6 @@ class VRTextToSpeech {
     _flutterTts = FlutterTts();
     
     try {
-      // Cấu hình cho tiếng Việt
       await _flutterTts!.setLanguage("vi-VN");
       await _flutterTts!.setSpeechRate(1.0);
       await _flutterTts!.setVolume(0.8);
@@ -21,7 +20,6 @@ class VRTextToSpeech {
       debugPrint('VR TTS: Initialized successfully for Vietnamese');
     } catch (e) {
       debugPrint('VR TTS: Initialization error: $e');
-      // Fallback to English if Vietnamese not available
       try {
         await _flutterTts!.setLanguage("en-US");
         _isInitialized = true;
@@ -44,16 +42,14 @@ class VRTextToSpeech {
       await _initTts();
       if (!_isInitialized) return false;
       
-      // Cập nhật settings
       await _flutterTts!.setSpeechRate(speechRate);
       await _flutterTts!.setPitch(pitch);
       await _flutterTts!.setVolume(volume);
       
-      // Speak text
       final result = await _flutterTts!.speak(text);
       debugPrint('VR TTS: Speaking "$text" - Result: $result');
       
-      return result == 1; // Success
+      return result == 1; 
     } catch (e) {
       debugPrint('VR TTS: Error speaking text: $e');
       return false;
